@@ -12,14 +12,29 @@ namespace controleContas
     }
     public class Conta
     {
+        public long Numero;
+        private decimal Saldo;
+        public long NumeroProp { get; private set; }
+        public decimal SaldoProp {
+            get {
+                return Saldo;
+            }
+            set {
+                if (Saldo >= 0.0m) {
+                    Saldo = value;
+                }
+                else {
+                    Console.WriteLine("O valor do saldo não pode ser negativo");
+                }
+            }
+        }
         public Conta(long numero) 
         {
             this.Numero = numero;
    
         }
         public Conta() { }
-        public long Numero { get; private set; }
-        public decimal Saldo { get; set; }
+       
 
         public decimal ObterSaldo()
         {
