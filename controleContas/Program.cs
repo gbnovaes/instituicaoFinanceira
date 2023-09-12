@@ -10,6 +10,8 @@ class Program //Declaração de funções e listas para o funcionamento da aplic
     static List<Cliente> clientes = new List<Cliente>();   //Cria a lista de Clientes
 
     static List<Conta> contas = new List<Conta>();         //Cria a lista de Contas 
+
+    
     
     static Cliente CriarCliente()    //Declara a função CriarCliente()                                                                     
     {
@@ -132,6 +134,8 @@ class Program //Declaração de funções e listas para o funcionamento da aplic
 
     static void Main() //Execução da aplicação
     {
+
+
         while (true)
         {
             ExibirMenu();

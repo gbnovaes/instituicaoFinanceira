@@ -57,7 +57,6 @@ namespace controleContas
             Numero = numero;
             Saldo = saldo;
             Titular = titular;
-   
         }
         public void Depositar(decimal valor)  //Função para depositos na Conta
         {
