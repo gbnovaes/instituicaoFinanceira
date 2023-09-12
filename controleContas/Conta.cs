@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace controleContas
 {
-    public class Cliente
+    public class Cliente  //Criação da classe Cliente
     {
         public string Nome { get; }
         public int AnoNascimento { get; }
         public string CPF { get; }
 
-        public Cliente(string nome, int anoNascimento, string cpf)
+        public Cliente(string nome, int anoNascimento, string cpf) //Método Construtor
         {
-            if (anoNascimento > DateTime.Now.Year - 18)
+            if (anoNascimento > DateTime.Now.Year - 18) //Não permite clientes menores de 18 anos 
             {
                 throw new ArgumentException("O cliente deve ter pelo menos 18 anos de idade.");
             }
@@ -23,29 +23,14 @@ namespace controleContas
             Nome = nome;
             AnoNascimento = anoNascimento;
             CPF = cpf;
-        }
-
-        public int CalcularIdade()
-        {
-            int idade = DateTime.Now.Year - AnoNascimento;
-            return idade;
-        }
-
-        public void ExibirInformacoesCliente()
-        {
-            Console.WriteLine($"Nome: {Nome}");
-            Console.WriteLine($"Data de Nascimento: {AnoNascimento}");
-            Console.WriteLine($"CPF: {CPF}");
-        }
-
+        }       
     }
-    public class Conta
+    public class Conta //Criação da classe Conta
     {
-        public long Numero;
+        public long Numero { get; private set; }
         public decimal Saldo;
         public Cliente Titular;
-        public long NumeroProp { get; private set; }
-        public decimal SaldoProp {
+        public decimal SaldoProp {   //Propriedade para impedir saldo inicial < R$10
             get {
                 return Saldo;
             }
@@ -59,28 +44,22 @@ namespace controleContas
             }
         }
      
-        public Conta(long numero, decimal saldo, Cliente titular) 
+        public Conta(long numero, decimal saldo, Cliente titular)  //Método contrutor da Conta
         {
-            if (titular == null)
+            if (titular == null)  //Impede a criação de conta sem titular (Cliente)
             {
-                throw new ArgumentNullException(nameof(titular), "A conta deve ter um titular associado.");
+                throw new ArgumentNullException(nameof(titular), "A conta deve ter um titular associado."); //Gera um erro e fecha a aplicação
             }
-            if (saldo < 20)
+            if (saldo < 10)
             {
-                throw new ArgumentException("O saldo inicial deve ser maior ou igual a 20.", nameof(saldo));
+                throw new ArgumentException("O saldo inicial deve ser maior ou igual a 10.", nameof(saldo)); //Gera um erro e fecha a aplicação
             }
             Numero = numero;
             Saldo = saldo;
             Titular = titular;
    
         }
- 
-        public decimal ObterSaldo()
-        {
-            return Saldo;
-        }
-
-        public void Depositar(decimal valor)
+        public void Depositar(decimal valor)  //Função para depositos na Conta
         {
             if (valor <= 0)
             {
@@ -92,10 +71,9 @@ namespace controleContas
                 Console.WriteLine($"Depósito de R${valor} realizado com sucesso. Novo saldo: R${Saldo}");
             }
         }
-
-        public void Sacar(decimal valor)
+        public void Sacar(decimal valor)  //Função para saques na Conta
         {
-            if (valor <= 0)
+            if (valor <= 0)  
             {
                 Console.WriteLine("O valor do saque deve ser maior que zero.");
             }
@@ -105,14 +83,14 @@ namespace controleContas
             }
             else
             {
-                decimal taxa = 0.10m;
+                decimal taxa = 0.10m;  //Taxa de 10 centavos pedida no exercício
                 Saldo -= (valor + taxa);
                 Console.WriteLine($"Saque de R${valor} realizado com sucesso. Taxa de R$0,10 aplicada. Novo saldo: R${Saldo}");
             }
         }
 
 
-        public static long ObterContaMaiorSaldo(List<Conta> contas)
+        public static long ObterContaMaiorSaldo(List<Conta> contas)  //Compara as contas na List<contas> para mostrar a com maior saldo
         {
             if (contas == null || contas.Count == 0)
             {
@@ -131,7 +109,7 @@ namespace controleContas
 
             return contaMaiorSaldo.Numero;
         }
-        public void Transferir(decimal valor, Conta contaDestino)
+        public void Transferir(decimal valor, Conta contaDestino) //Realiza transfêrencias entre contas
         {
             if (valor <= 0)
             {
@@ -143,17 +121,12 @@ namespace controleContas
             }
             else
             {
-                Saldo -= valor;
+                Saldo -= valor; //Subtrai o valor 
                 contaDestino.Depositar(valor);
                 Console.WriteLine($"Transferência de R${valor} para a Conta {contaDestino.Numero} realizada com sucesso.");
                 Console.WriteLine($"Saldo atual da Conta {Numero}: R${Saldo}");
                 Console.WriteLine($"Saldo atual da Conta {contaDestino.Numero}: R${contaDestino.Saldo}");
             }
-        }
-
-        public override string ToString()
-        {
-            return $"Conta {Numero} - Saldo: R${Saldo} - Titular: {Titular.Nome}";
         }
     }
 }
