@@ -93,7 +93,7 @@ namespace controleContas
         {
             if (contas == null || contas.Count == 0)
             {
-                throw new ArgumentException("O array de contas está vazio ou nulo.");
+                throw new ArgumentException("O List<> de contas está vazio ou nulo.");
             }
 
             Conta contaMaiorSaldo = contas[0];
